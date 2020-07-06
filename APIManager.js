@@ -2,7 +2,7 @@
 
 class APIManager {
     constructor() {
-        this.data = { main: {} }
+        this.data = { main: { loaded: false } }
     }
 
     randUser() {
@@ -37,7 +37,7 @@ class APIManager {
 
     pokemon() {
         $.ajax({
-            url: `https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 100)}`,
+            url: `https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 950)}`,
             method: 'GET',
             success: (data) => {
                 this.data.main.pokemon = { name: data.name, picture: data.sprites.front_shiny };
@@ -62,5 +62,6 @@ class APIManager {
         this.randUser()
         this.pokemon()
         this.baconIpsum()
+        this.data.main.loaded = !this.data.main.loaded
     };
 }
