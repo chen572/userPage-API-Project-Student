@@ -4,7 +4,7 @@ let users = JSON.parse(localStorage.users || '[]');
 let id = users.length;
 
 $('.container').on('click', '#load', () => {
-    user = new APIManager()
+    // user = new APIManager()
     user.loadUser()
 })
 

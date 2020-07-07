@@ -2,7 +2,7 @@
 
 class APIManager {
     constructor() {
-        this.data = { main: { loaded: false } }
+        this.data = { main: { loaded: false }, friends: [] }
     }
 
     randUser() {
@@ -15,12 +15,12 @@ class APIManager {
                         name: `${u.name.first} ${u.name.last}`,
                         address: `${u.location.city}, ${u.location.state}`,
                         picture: u.picture.large
-                    } : this.data[i] = {
+                    } : this.data.friends.push({
                         name: `${u.name.first} ${u.name.last}`
-                    }
+                    })
                 })
             },
-            error: (xhr, text, err) => { console.log(text) }
+            error: (xhr, text, err) => { this.data.main.loaded = false; console.log(text) }
         });
     };
 
@@ -31,7 +31,7 @@ class APIManager {
             success: (data) => {
                 this.data.main.kq = data;
             },
-            error: (xhr, text, err) => { console.log(text) }
+            error: (xhr, text, err) => { this.data.main.loaded = false; console.log(text) }
         });
     };
 
@@ -42,7 +42,7 @@ class APIManager {
             success: (data) => {
                 this.data.main.pokemon = { name: data.name, picture: data.sprites.front_shiny };
             },
-            error: (xhr, text, err) => { console.log(text) }
+            error: (xhr, text, err) => { this.data.main.loaded = false; console.log(text) }
         });
     };
 
@@ -53,11 +53,12 @@ class APIManager {
             success: (data) => {
                 this.data.main.aboutMe = data.join(' ');
             },
-            error: (xhr, text, err) => { console.log(text) }
+            error: (xhr, text, err) => { this.data.main.loaded = false; console.log(text) }
         });
     };
 
     loadUser() {
+        this.data = { main: { loaded: false }, friends: [] }
         this.kanyeQ()
         this.randUser()
         this.pokemon()
